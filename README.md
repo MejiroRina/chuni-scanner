@@ -12,8 +12,9 @@ The workflows are thin callers of the shared templates in
 templates first; customize in the caller only when they genuinely cannot meet a need,
 with a comment saying why.
 
-- `ci.yml`: ruff check + format check, `compileall`, and the sdist/wheel build on every
-  PR and main push. The single required check is `CI OK`.
+- `ci.yml`: ruff check + format check, `compileall`, the sdist/wheel build and actionlint
+  on every PR and main push. `CI OK` aggregates these jobs; `main` has no branch
+  protection, so it is not enforced on PRs, but the release gate requires it.
 - `release.yml`: bump `version` in `pyproject.toml` in a PR, merge, then push the tag
   `vX.Y.Z`. The gate checks that the tag matches `pyproject.toml` and that the tagged
   commit's `CI OK` is green, then the dist is built and published to PyPI (trusted
